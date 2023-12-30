@@ -12,6 +12,13 @@ code {
     monospace;
 }
 
+.product-title{
+  height: 2.5em; /* Set a fixed height */
+  overflow: hidden; /* Hide the overflow */
+  text-overflow: ellipsis; /* Add an ellipsis to the end */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
 .rating span{
   margin: 0.1rem;
 }
