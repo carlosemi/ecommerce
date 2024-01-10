@@ -5,7 +5,11 @@ import Message from '../../components/Message'
 import Loader from '../../components/Loader'
 import FormContainer from '../../components/FormContainer'
 import {toast} from 'react-toastify'
-import {useGetProductDetailsQuery, useUpdateProductMutation} from '../../slices/productsApiSlice'
+import {
+    useGetProductDetailsQuery, 
+    useUpdateProductMutation,
+    useUploadProductImageMutation
+} from '../../slices/productsApiSlice'
 
 
 const ProductEditScreen = () => {
@@ -21,6 +25,8 @@ const ProductEditScreen = () => {
     const {data: product, isLoading, refetch, error} = useGetProductDetailsQuery(productId)
 
     const [updateProduct, {isLoading: loadingUpdate}] = useUpdateProductMutation()
+
+    const [uploadProductImage, {isLoading: loadingUpload}] = useUploadProductImageMutation()
 
     const navigate = useNavigate()
 
@@ -56,6 +62,18 @@ const ProductEditScreen = () => {
         toast.error(err?.data?.message || err.error);
         }
 
+    }
+
+    const uploadFileHandler = async (e) => {
+        const formData = new FormData()
+        formData.append('image', e.target.files[0])
+        try {
+            const res = await uploadProductImage(formData).unwrap()
+            toast.success(res.message)
+            setImage(res.image)
+        } catch (err) {
+            toast.error(err?.data?.message || err.error)
+        }
     }
     return (
         <>
@@ -98,11 +116,11 @@ const ProductEditScreen = () => {
                 type='text'
                 placeholder='Enter image url'
                 value={image}
-                onChange={(e) => setImage(e.target.value)}
+                onChange={(e) => setImage}
               ></Form.Control>
               <Form.Control
                 label='Choose File'
-                // onChange={}
+                onChange={uploadFileHandler}
                 type='file'
               ></Form.Control>
               {/* {loadingUpload && <Loader />} */}
