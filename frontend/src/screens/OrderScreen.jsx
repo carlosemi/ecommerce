@@ -1,7 +1,7 @@
 import {Link, useParams} from 'react-router-dom'
 import {Row, Col, ListGroup, Image, Card, Button} from 'react-bootstrap'
 import {PayPalButtons, usePayPalScriptReducer} from '@paypal/react-paypal-js'
-import {useDispatch, useSelector} from 'react-redux'
+import { useSelector} from 'react-redux'
 import Message from '../components/Message'
 import {useEffect} from 'react'
 import {useGetOrderDetailsQuery, usePayOrderMutation, useGetPayPalClientIdQuery, useDeliverOrderMutation} from '../slices/ordersApiSlice'
@@ -11,7 +11,6 @@ import {toast} from 'react-toastify'
 
 const OrderScreen = () => {
     const {id: orderId} = useParams()
-    const dispatch = useDispatch()
 
     const {data: order, refetch, isLoading, error} = useGetOrderDetailsQuery(orderId)
 
@@ -58,11 +57,12 @@ const OrderScreen = () => {
         })
     }
 
-    async function onApproveTest(){
-        await payOrder({orderId, details: {payer: {}}})
-        refetch();
-        toast.success('Payment successful')
-    } 
+    // TESTING ONLY!
+    // async function onApproveTest(){
+    //     await payOrder({orderId, details: {payer: {}}})
+    //     refetch();
+    //     toast.success('Payment successful')
+    // } 
 
     function onError(err){
         toast.error(err.message)
