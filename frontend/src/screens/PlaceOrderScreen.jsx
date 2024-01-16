@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom'
-import {Row, Col, ListGroup, Image, Form, Button, Card} from 'react-bootstrap'
+import {Row, Col, ListGroup, Image, Button, Card} from 'react-bootstrap'
 import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import {toast} from 'react-toastify'
@@ -135,7 +135,7 @@ const PlaceOrderScreen = () => {
                             </ListGroup.Item>
 
                             <ListGroup.Item>
-                                {error && <Message variant='danger'>{error}</Message>}
+                                {error && <Message variant='danger'>{error.data.message}</Message>}
                             </ListGroup.Item>
 
                             <ListGroup.Item>
